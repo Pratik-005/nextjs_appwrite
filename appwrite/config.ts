@@ -15,7 +15,6 @@ type createUserAccount = {
 
 type loginUserAccount = {
     email: string,
-    name: string,
     password: string,
 }
 
@@ -24,7 +23,9 @@ class AppWriteService {
     async createAccount({ email, password, name }: createUserAccount) {
         try {
             const user = await account.create({ userId: ID.unique(), email: email, password: password });
-            if (user) return this.login;
+            if (user) {
+                return this.login;
+            }
             return user;
         } catch (error) {
             throw error

@@ -1,9 +1,21 @@
-import { createContext } from "react";
+import { createContext, useState, ReactNode } from "react";
 
+type AuthContextType = {
+    authStatus: boolean;
+    setAuthStatus: (status: boolean) => void;
+};
 
-export const AuthContext = createContext<{ authStatus: boolean }>({
-    authStatus: false
+export const AuthContext = createContext<AuthContextType>({
+    authStatus: false,
+    setAuthStatus: () => { },
 });
 
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
+    const [authStatus, setAuthStatus] = useState(false);
 
-export const AuthProvider = AuthContext.Provider ;
+    return (
+        <AuthContext.Provider value={{ authStatus, setAuthStatus }}>
+            {children}
+        </AuthContext.Provider>
+    );
+};
