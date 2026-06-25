@@ -1,4 +1,4 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState, ReactNode, createElement } from "react";
 
 type AuthContextType = {
     authStatus: boolean;
@@ -13,9 +13,9 @@ export const AuthContext = createContext<AuthContextType>({
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [authStatus, setAuthStatus] = useState(false);
 
-    return (
-        <AuthContext.Provider value={{ authStatus, setAuthStatus }}>
-            {children}
-        </AuthContext.Provider>
+    return createElement(
+        AuthContext.Provider,
+        { value: { authStatus, setAuthStatus } },
+        children
     );
 };
