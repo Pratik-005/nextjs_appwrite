@@ -3,43 +3,40 @@ import appwriteService from "@/appwrite/config";
 import Blog from "@/components/Blob";
 import Header from "@/components/Header";
 import { AuthProvider } from "@/context/authContext";
+import useAuth from "@/context/useAuth";
 import React, { useEffect, useState } from "react";
 
-const ProtectedLayout = ({
-    children,
-}: {
-    children: React.ReactNode
-}) => {
+const ProtectedLayout = ({ children }: { children: React.ReactNode }) => {
 
-    const [authStatus, setAuthStatus] = useState(false);
+    const { setAuthStatus } = useAuth();
     const [loader, setLoader] = useState(true);
 
     useEffect(() => {
         appwriteService.isLoggedIn()
-            .then(setAuthStatus)
+            .then(() => setAuthStatus(true))
             .finally(() => setLoader(false));
     }, []);
 
-    return <AuthProvider value={{ authStatus, setAuthStatus }}>
+    return <AuthProvider>
         {!loader && (
             <>
                 <div className="text-primary">
-                    <div className="fixed -z-[1] left-1/3 w-12 top-2/3 blur-2xl">
+                    <div className="fixed z-[-1] left-1/3 w-12 top-2/3 blur-2xl">
                         <Blog blur />
                     </div>
-                    <div className="fixed -z-[1] left-2/3 w-12 top-1/3 blur-2xl">
+                    <div className="fixed z-[-1] left-2/3 w-12 top-1/3 blur-2xl">
                         <Blog blur />
                     </div>
-                    <div className="fixed -z-[1] left-1/4 w-40 top-1/4 blur-2xl opacity-50">
+                    <div className="fixed z-[-1] left-1/4 w-40 top-1/4 blur-2xl opacity-50">
                         <Blog blur />
                     </div>
-                    <div className="fixed -z-[1] left-1/2 w-32 top-1/2 blur-2xl opacity-60">
+                    <div className="fixed z-[-1] left-1/2 w-32 top-1/2 blur-2xl opacity-60">
                         <Blog blur />
                     </div>
-                    <div className="fixed -z-[1] left-[45%] w-12 top-1/3 blur-2xl">
+                    <div className="fixed z-[-1] left-[45%] w-12 top-1/3 blur-2xl">
                         <Blog blur />
                     </div>
-                    <div className="fixed -z-[1] left-3/4 w-60 top-1/3 opacity-20 blur-2xl">
+                    <div className="fixed z-[-1] left-3/4 w-60 top-1/3 opacity-20 blur-2xl">
                         <Blog blur />
                     </div>
                 </div>
